@@ -1,6 +1,7 @@
 // components/ToastDemo.tsx
 import { useToast } from "@/hooks/useToast"; // Import from the new file
 import { Button } from "@/components/ui/button"; // Assuming you have a Button component
+import { toast } from '@/components/ui/toast';
 
 export const ToastDemo = () => {
   const { toast } = useToast();
