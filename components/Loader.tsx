@@ -8,6 +8,9 @@ const Loader = () => {
         alt="Loading..."
         width={50}
         height={50}
+        priority // Ensures the image is loaded as a priority
+        aria-busy="true" // Indicates that the loader is active for screen readers
+        aria-label="Loading"
       />
     </div>
   );
