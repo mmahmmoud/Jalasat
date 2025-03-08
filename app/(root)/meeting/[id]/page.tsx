@@ -1,3 +1,5 @@
+'use client'; // Add this line at the top
+
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { StreamCall, StreamTheme } from '@stream-io/video-react-sdk';
@@ -7,7 +9,7 @@ import { useGetCallById } from '@/hooks/useGetCallById';
 import Alert from '@/components/Alert';
 import MeetingSetup from '@/components/MeetingSetup';
 import MeetingRoom from '@/components/MeetingRoom';
-import Loader from '@/components/Loader'; // Import the Loader component
+import Loader from '@/components/Loader';
 
 const MeetingPage = () => {
   const { id } = useParams();
@@ -19,7 +21,7 @@ const MeetingPage = () => {
   const { call, isCallLoading } = useGetCallById(callId);
   const [isSetupComplete, setIsSetupComplete] = useState(false);
 
-  if (!isLoaded || isCallLoading) return <Loader />; // Use the Loader component
+  if (!isLoaded || isCallLoading) return <Loader />;
 
   if (!call) return (
     <p className="text-center text-3xl font-bold text-white">
