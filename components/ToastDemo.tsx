@@ -1,21 +1,22 @@
-// components/ToastDemo.tsx
-import { useToast } from "@/hooks/useToast"; // Import from the new file
-import { Button } from "@/components/ui/button"; // Assuming you have a Button component
-import { Toast } from '@/components/ui/ToastDemo';
+import { useToast } from "@/hooks/useToast"; // Corrected import
+import { Button } from "@/components/ui/button";
 
 export const ToastDemo = () => {
-  const { toast } = useToast();
+  const { showToast } = useToast();
 
   return (
-    <Button
-      onClick={() => {
-        toast({
-          title: "Scheduled: Catch up",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        });
-      }}
-    >
-      Show Toast
-    </Button>
+    <div>
+      <Button
+        onClick={() => showToast("Success!", "Your action was successful.")}
+      >
+        Show Success Toast
+      </Button>
+      <Button
+        variant="destructive"
+        onClick={() => showToast("Error!", "Something went wrong.", "destructive")}
+      >
+        Show Error Toast
+      </Button>
+    </div>
   );
 };

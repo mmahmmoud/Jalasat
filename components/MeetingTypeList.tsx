@@ -3,17 +3,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-import HomeCard from './HomeCard';
-import MeetingModal from './MeetingModal';
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'sonner'; // Import toast from sonner
 import { Call, useStreamVideoClient } from '@stream-io/video-react-sdk';
 import { useUser } from '@clerk/nextjs';
 import Loader from './Loader';
 import { Textarea } from './ui/textarea';
 import ReactDatePicker from 'react-datepicker';
-import { useToast } from './ui/use-toast';
 import { Input } from './ui/input';
-
+import HomeCard from '@/components/HomeCard';
+import MeetingModal from '@/components/MeetingModal';
 const initialValues = {
   dateTime: new Date(),
   description: '',
@@ -29,16 +28,15 @@ const MeetingTypeList = () => {
   const [callDetail, setCallDetail] = useState<Call>();
   const client = useStreamVideoClient();
   const { user } = useUser();
-  const { toast } = useToast();
 
   const createMeeting = async () => {
     if (!client || !user) return;
     try {
       if (!values.dateTime) {
-        toast({ title: 'Please select a date and time' });
+        toast('Please select a date and time'); // Use sonner toast
         return;
       }
-      const id = crypto.randomUUID();
+      const id = uuidv4(); // Use uuidv4 instead of crypto.randomUUID
       const call = client.call('default', id);
       if (!call) throw new Error('Failed to create meeting');
       const startsAt =
@@ -56,12 +54,12 @@ const MeetingTypeList = () => {
       if (!values.description) {
         router.push(`/meeting/${call.id}`);
       }
-      toast({
-        title: 'Meeting Created',
-      });
+      toast('Meeting Created'); // Use sonner toast
     } catch (error) {
       console.error(error);
-      toast({ title: 'Failed to create Meeting' });
+      toast('Failed to create Meeting', {
+        className: 'bg-red-500 text-white', // Optional: Add a destructive style
+      });
     }
   };
 
@@ -123,7 +121,11 @@ const MeetingTypeList = () => {
             </label>
             <ReactDatePicker
               selected={values.dateTime}
-              onChange={(date) => setValues({ ...values, dateTime: date! })}
+              onChange={(date) => {
+                if (date) {
+                  setValues({ ...values, dateTime: date });
+                }
+              }}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={15}
@@ -140,7 +142,7 @@ const MeetingTypeList = () => {
           title="Meeting Created"
           handleClick={() => {
             navigator.clipboard.writeText(meetingLink);
-            toast({ title: 'Link Copied' });
+            toast('Link Copied'); // Use sonner toast
           }}
           image={'/icons/checked.svg'}
           buttonIcon="/icons/copy.svg"

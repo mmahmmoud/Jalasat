@@ -1,10 +1,14 @@
-import { toast } from '@/components/ui/ToastDemo'; // Adjust the import based on your project structure
+import { toast } from 'sonner';
 
 export const useToast = () => {
-  const showToast = (message: string, type: 'success' | 'error' | 'info') => {
-    toast({
-      title: message,
-      variant: type,
+  const showToast = (
+    title: string,
+    description?: string,
+    variant: 'default' | 'destructive' = 'default'
+  ) => {
+    toast(title, {
+      description,
+      className: variant === 'destructive' ? 'bg-red-500 text-white' : 'bg-dark-1 text-white',
     });
   };
 

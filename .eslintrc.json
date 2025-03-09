@@ -4,5 +4,8 @@
     "standard",
     "plugin:tailwindcss/recommended",
     "prettier"
-  ]
+  ],
+  "rules": {
+    // Add custom rules here if needed
+  }
 }
